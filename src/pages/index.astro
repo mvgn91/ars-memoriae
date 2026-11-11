@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import '../styles/global.css';
+---
+
+<BaseLayout title="Ars Memoriae — Su colección, documentada.">
+  <main>
+    <section class="hero" data-reveal="hero">
+      <div class="hero__texture" aria-hidden="true"></div>
+      <SectionLabel>Ars Memoriae</SectionLabel>
+      <h1><span>Su colección,</span><br /><span>documentada.</span></h1>
+      <p class="hero__support">Ars Memoriae registra colecciones privadas pieza por pieza: fotografía, cine, voz y catálogo.</p>
+      <p class="scroll-cue">Desplácese <span aria-hidden="true">↓</span></p>
+    </section>
+
+    <section class="promise" data-reveal>
+      <SectionLabel>¿Para quién es?</SectionLabel>
+      <p class="promise__lead">Ars Memoriae trabaja con una sola persona y una colección. La materia, la historia y la voz de quien guarda pueden encontrarse en un mismo archivo organizado, consultable y expandible.</p>
+    </section>
+
+    <section class="about" data-reveal>
+      <SectionLabel>¿Qué es Ars Memoriae?</SectionLabel>
+      <div class="about__copy">
+        <h2>Un servicio de archivo digital para colecciones privadas.</h2>
+        <div>
+          <p>Ars Memoriae nace como una iniciativa de MVGN Labs. Su trabajo es curar, digitalizar y organizar una colección para que pueda consultarse y crecer con claridad.</p>
+          <p>Fotografía, cine por pieza, nota de voz, testimonio y catálogo. El formato depende de cada cliente y del presupuesto aceptado; con presupuesto, se incluye la producción necesaria.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="metamorphosis">
+      <SectionLabel>¿Qué se registra?</SectionLabel>
+      <div class="metamorphosis__frame">
+        <div class="object-orb" data-orb-wrap>
+          <canvas class="object-orb__canvas" data-orb-canvas aria-label="Ornamento animado"></canvas>
+        </div>
+        <div class="metamorphosis__copy">
+          <h2>Fotografía, cine, voz y catálogo.</h2>
+          <p class="metamorphosis__note">Se registra la pieza, su contexto y la voz de quien la guarda. El formato se decide según la colección y el alcance del proyecto.</p>
+          <div class="recording-modes">
+            <span>Fotografía</span><span>Cine por pieza</span><span>Nota de voz</span><span>Ficha de catálogo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="method" data-reveal>
+      <SectionLabel>¿Cómo se hace?</SectionLabel>
+      <p class="method__intro">Descubrir, curar, registrar y preservar. El orden y el peso de cada paso se acuerdan con usted, por proyecto.</p>
+      <ol>
+        <li><strong>Descubrir</strong><span>Escuchar la colección y su historia.</span></li>
+        <li><strong>Curar</strong><span>Dar orden, relación y contexto a cada pieza.</span></li>
+        <li><strong>Registrar</strong><span>Documentar con el formato elegido.</span></li>
+        <li><strong>Preservar</strong><span>Dejar un archivo privado, claro y expandible.</span></li>
+      </ol>
+    </section>
+
+    <section class="deliverable" data-reveal>
+      <SectionLabel>¿Cómo queda el archivo?</SectionLabel>
+      <div class="capabilities">
+        <p class="archive-copy">El archivo se arma a la medida de quien lo guarda. Usted decide el tono de la preservación: qué se registra, en qué formato y cómo quedaría guardada su colección. No hay un formato único ni una regla fija: cada colección se preserva como su dueño la imaginaría inmortalizada. El sistema de preservación se ofrece en base a sus necesidades y a su visión. El archivo queda en privado y crece cuando usted lo decida.</p>
+      </div>
+      <details class="faq"><summary>¿Qué se acuerda?</summary><p>La entrega, el acceso y el tratamiento de la privacidad se acuerdan por proyecto. El archivo puede ampliarse cuando la colección o sus necesidades cambien.</p></details>
+    </section>
+
+    <section class="invitation" data-reveal>
+      <SectionLabel>Contacto</SectionLabel>
+      <h2>Hablemos de su colección.</h2>
+      <div class="contact-links">
+        <a href="https://wa.me/523322621939">WhatsApp — 33 2262 1939 <span aria-hidden="true">↗</span></a>
+        <a href="mailto:mvgnlabs@proton.me">Correo — mvgnlabs@proton.me <span aria-hidden="true">↗</span></a>
+        <a href="https://mvgn.pages.dev">MVGN Labs — https://mvgn.pages.dev <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="fine-print">La demostración no documenta una colección real; el sitio se muestra, no agenda.</p>
+    </section>
+
+    <footer class="footer">
+      <SectionLabel>Colofón</SectionLabel>
+      <p><a href="https://mvgn.pages.dev">MVGN Labs</a></p>
+      <p>Discreción · Consentimiento · Claridad documental · Alcance por proyecto</p>
+      <p class="fine-print">Provisional — andamiaje de diseño v2.</p>
+    </footer>
+  </main>
+  <script>
+    import '../scripts/motion.ts';
+    import '../scripts/object-orb.ts';
+  </script>
+</BaseLayout>

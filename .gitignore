@@ -1,0 +1,12 @@
+# ─── MVGN runtime (LAYOUT/2.0 §3): local, nunca se publica ───
+.mvgn/
+
+# ─── Higiene del proyecto ────────────────────────────────────
+node_modules/
+.astro/
+dist/
+build/
+.env*
+.env*.local
+.DS_Store
+*.tmp
