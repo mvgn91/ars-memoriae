@@ -1,90 +1,100 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionLabel from '../components/SectionLabel.astro';
+import WhatsApp from '../components/WhatsApp.astro';
+import { ArrowDown, ArrowUpRight, Mail, Plus } from 'lucide-astro';
 import '../styles/global.css';
+const moments = [
+  ['sentido', 'Sentido'], ['que-es-ars', 'Qué es Ars'], ['como-se-trabaja', 'Cómo se trabaja'],
+  ['quien-responde', 'Quién responde'], ['contacto', 'Contacto'],
+];
+const steps = [
+  ['Escuchar', 'Conocer la colección y escuchar a quien la conserva.'],
+  ['Comprender', 'Identificar qué significa, qué desea documentar y qué prefiere reservar.'],
+  ['Acordar', 'Definir alcance, recursos, condiciones y entrega.'],
+  ['Documentar', 'Realizar el registro con los medios convenidos.'],
+];
 ---
-
 <BaseLayout title="Ars Memoriae — Su colección, documentada.">
-  <main>
-    <section class="hero" data-reveal="hero">
-      <div class="hero__texture" aria-hidden="true"></div>
-      <SectionLabel>Ars Memoriae</SectionLabel>
-      <h1><span>Su colección,</span><br /><span>documentada.</span></h1>
-      <p class="hero__support">Ars Memoriae registra colecciones privadas pieza por pieza: fotografía, cine, voz y catálogo.</p>
-      <p class="scroll-cue">Desplácese <span aria-hidden="true">↓</span></p>
+  <nav class="moment-index" aria-label="Índice de la página">
+    {moments.map(([id, label], index) => <a href={`#${id}`} aria-label={`${String(index + 1).padStart(2, '0')} ${label}`}><span class="moment-index__number">0{index + 1}</span><span class="moment-index__label">{label}</span></a>)}
+  </nav>
+  <main id="inicio" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <a class="wordmark" href="#inicio">Ars Memoriae</a>
+      <div class="hero__composition">
+        <h1 id="hero-title">Su colección,<br /><em>documentada.</em></h1>
+        <div class="object-orb" data-orb-wrap aria-hidden="true"><canvas data-orb-canvas></canvas></div>
+      </div>
+      <div class="hero__bottom">
+        <p>Ars Memoriae documenta colecciones privadas.</p>
+        <a class="scroll-cue" href="#sentido">Desplácese <ArrowDown aria-hidden="true" /></a>
+      </div>
     </section>
 
-    <section class="promise" data-reveal>
-      <SectionLabel>¿Para quién es?</SectionLabel>
-      <p class="promise__lead">Ars Memoriae trabaja con una sola persona y una colección. La materia, la historia y la voz de quien guarda pueden encontrarse en un mismo archivo organizado, consultable y expandible.</p>
-    </section>
-
-    <section class="about" data-reveal>
-      <SectionLabel>¿Qué es Ars Memoriae?</SectionLabel>
-      <div class="about__copy">
-        <h2>Un servicio de archivo digital para colecciones privadas.</h2>
-        <div>
-          <p>Ars Memoriae nace como una iniciativa de MVGN Labs. Su trabajo es curar, digitalizar y organizar una colección para que pueda consultarse y crecer con claridad.</p>
-          <p>Fotografía, cine por pieza, nota de voz, testimonio y catálogo. El formato depende de cada cliente y del presupuesto aceptado; con presupuesto, se incluye la producción necesaria.</p>
+    <section id="sentido" class="moment sense" aria-labelledby="sentido-title">
+      <div class="section-content" data-reveal>
+        <p class="section-label"><span>01</span> Sentido</p>
+        <div class="editorial-grid">
+          <h2 id="sentido-title">Sentido</h2>
+          <p class="lead">Una colección guarda más que objetos: guarda lo que su propietario sabe de cada pieza — por qué llegó, qué significa, qué historia tiene. Ese conocimiento no está en los objetos; está en quien los reunió. Documentarlo es ponerlo por escrito, con la pieza, su contexto y su voz.</p>
         </div>
       </div>
     </section>
 
-    <section class="metamorphosis">
-      <SectionLabel>¿Qué se registra?</SectionLabel>
-      <div class="metamorphosis__frame">
-        <div class="object-orb" data-orb-wrap>
-          <canvas class="object-orb__canvas" data-orb-canvas aria-label="Ornamento animado"></canvas>
+    <section id="que-es-ars" class="moment service" aria-labelledby="ars-title">
+      <div class="section-content" data-reveal>
+        <p class="section-label"><span>02</span> Qué es Ars</p>
+        <div class="editorial-grid">
+          <h2 id="ars-title">¿Qué es<br /><em>Ars Memoriae?</em></h2>
+          <p class="lead">Ars Memoriae documenta colecciones privadas. Cada proyecto se define con su propietario: qué se documenta, en qué formato y con qué alcance. El trabajo se realiza con discreción y en privado. Por ejemplo, una pieza puede documentarse con fotografía, con la historia contada por su propietario, o con ambas.</p>
         </div>
-        <div class="metamorphosis__copy">
-          <h2>Fotografía, cine, voz y catálogo.</h2>
-          <p class="metamorphosis__note">Se registra la pieza, su contexto y la voz de quien la guarda. El formato se decide según la colección y el alcance del proyecto.</p>
-          <div class="recording-modes">
-            <span>Fotografía</span><span>Cine por pieza</span><span>Nota de voz</span><span>Ficha de catálogo</span>
+      </div>
+    </section>
+
+    <section id="como-se-trabaja" class="moment method" aria-labelledby="method-title">
+      <div class="section-content" data-reveal>
+        <p class="section-label"><span>03</span> Cómo se trabaja</p>
+        <div class="editorial-grid">
+          <div class="method__heading"><h2 id="method-title">Cuatro<br /><em>pasos.</em></h2><p>El orden y el peso de cada paso se acuerdan con usted, por proyecto.</p></div>
+          <div class="method__body">
+            <ol class="steps">{steps.map(([name, description], index) => <li><span class="step-number">0{index + 1}</span><div><h3>{name}</h3><p>{description}</p></div></li>)}</ol>
+            <div class="faq" aria-label="Preguntas frecuentes">
+              <details><summary>¿Qué se acuerda?<Plus aria-hidden="true" /></summary><p>Las condiciones de acceso, entrega y uso se acuerdan en cada proyecto.</p></details>
+              <details><summary>¿Cómo queda el archivo?<Plus aria-hidden="true" /></summary><p>El archivo resultante es privado por defecto: nada se publica ni se comparte sin su acuerdo.</p></details>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="method" data-reveal>
-      <SectionLabel>¿Cómo se hace?</SectionLabel>
-      <p class="method__intro">Descubrir, curar, registrar y preservar. El orden y el peso de cada paso se acuerdan con usted, por proyecto.</p>
-      <ol>
-        <li><strong>Descubrir</strong><span>Escuchar la colección y su historia.</span></li>
-        <li><strong>Curar</strong><span>Dar orden, relación y contexto a cada pieza.</span></li>
-        <li><strong>Registrar</strong><span>Documentar con el formato elegido.</span></li>
-        <li><strong>Preservar</strong><span>Dejar un archivo privado, claro y expandible.</span></li>
-      </ol>
-    </section>
-
-    <section class="deliverable" data-reveal>
-      <SectionLabel>¿Cómo queda el archivo?</SectionLabel>
-      <div class="capabilities">
-        <p class="archive-copy">El archivo se arma a la medida de quien lo guarda. Usted decide el tono de la preservación: qué se registra, en qué formato y cómo quedaría guardada su colección. No hay un formato único ni una regla fija: cada colección se preserva como su dueño la imaginaría inmortalizada. El sistema de preservación se ofrece en base a sus necesidades y a su visión. El archivo queda en privado y crece cuando usted lo decida.</p>
+    <section id="quien-responde" class="moment identity" aria-labelledby="identity-title">
+      <div class="section-content" data-reveal>
+        <p class="section-label"><span>04</span> Quién responde</p>
+        <div class="identity__grid">
+          <div class="identity__copy"><h2 id="identity-title">¿Quién<br /><em>responde?</em></h2><p class="lead">Ars Memoriae es una iniciativa de MVGN Labs para documentar colecciones privadas. Está a cargo de Armando Ibáñez.</p></div>
+          <figure><img src="/armando-ibanez.webp" width="1600" height="1600" loading="lazy" decoding="async" alt="Armando Ibáñez" /><figcaption><span>Armando Ibáñez</span><span>A cargo de Ars Memoriae — MVGN Labs</span></figcaption></figure>
+        </div>
       </div>
-      <details class="faq"><summary>¿Qué se acuerda?</summary><p>La entrega, el acceso y el tratamiento de la privacidad se acuerdan por proyecto. El archivo puede ampliarse cuando la colección o sus necesidades cambien.</p></details>
     </section>
 
-    <section class="invitation" data-reveal>
-      <SectionLabel>Contacto</SectionLabel>
-      <h2>Hablemos de su colección.</h2>
-      <div class="contact-links">
-        <a href="https://wa.me/523322621939">WhatsApp — 33 2262 1939 <span aria-hidden="true">↗</span></a>
-        <a href="mailto:mvgnlabs@proton.me">Correo — mvgnlabs@proton.me <span aria-hidden="true">↗</span></a>
-        <a href="https://mvgn.pages.dev">MVGN Labs — https://mvgn.pages.dev <span aria-hidden="true">↗</span></a>
+    <section id="contacto" class="moment invitation" aria-labelledby="contact-title">
+      <div class="section-content" data-reveal>
+        <p class="section-label"><span>05</span> Contacto</p>
+        <h2 id="contact-title">¿Desea documentar<br /><em>su colección?</em></h2>
+        <p class="invitation__intro">Escríbanos. Le respondemos personalmente y definimos juntos el primer paso.</p>
+        <div class="contact-links">
+          <a class="contact-card contact-card--primary" href="https://wa.me/523322621939" target="_blank" rel="noopener noreferrer"><span class="contact-card__label">WhatsApp <WhatsApp /></span><span class="contact-card__value">Escribir por WhatsApp <ArrowUpRight aria-hidden="true" /></span></a>
+          <a class="contact-card" href="mailto:mvgnlabs@proton.me"><span class="contact-card__label">Correo <Mail aria-hidden="true" /></span><span class="contact-card__value">mvgnlabs@proton.me <ArrowUpRight aria-hidden="true" /></span></a>
+          <a class="contact-card" href="https://mvgn.pages.dev" target="_blank" rel="noopener noreferrer"><span class="contact-card__label">MVGN Labs <ArrowUpRight aria-hidden="true" /></span><span class="contact-card__value">mvgn.pages.dev</span></a>
+        </div>
+        <aside class="disclaimer" aria-label="Alcance profesional"><p>Ars Memoriae documenta una colección y su contexto, por proyecto y de acuerdo con su propietario. El archivo resultante es privado por defecto: nada se publica ni se comparte sin su acuerdo. Ars Memoriae no ofrece custodia, conservación permanente ni valoración de las piezas. Las condiciones de acceso, entrega y uso se acuerdan en cada proyecto.</p></aside>
       </div>
-      <p class="fine-print">La demostración no documenta una colección real; el sitio se muestra, no agenda.</p>
     </section>
-
-    <footer class="footer">
-      <SectionLabel>Colofón</SectionLabel>
-      <p><a href="https://mvgn.pages.dev">MVGN Labs</a></p>
-      <p>Discreción · Consentimiento · Claridad documental · Alcance por proyecto</p>
-      <p class="fine-print">Provisional — andamiaje de diseño v2.</p>
-    </footer>
+    <footer><a class="wordmark" href="#inicio">Ars Memoriae</a><a href="https://mvgn.pages.dev" target="_blank" rel="noopener noreferrer">MVGN Labs <ArrowUpRight aria-hidden="true" /></a></footer>
   </main>
   <script>
     import '../scripts/motion.ts';
     import '../scripts/object-orb.ts';
+    import '../scripts/silk.ts';
   </script>
 </BaseLayout>

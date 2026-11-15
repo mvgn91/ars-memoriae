@@ -1,31 +1,34 @@
 ---
+import { ArrowUp, Sun, Moon } from 'lucide-astro';
+import WhatsApp from '../components/WhatsApp.astro';
 const { title = 'Ars Memoriae' } = Astro.props;
 ---
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Ars Memoriae documenta colecciones privadas." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Ars Memoriae documenta colecciones privadas. Cada proyecto se define con su propietario: qué se documenta, en qué formato y con qué alcance." />
+    <meta name="color-scheme" content="dark light" />
     <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline>
-      const savedTheme = localStorage.getItem('ars-memoria-theme');
-      document.documentElement.dataset.theme = savedTheme === 'light' ? 'light' : 'dark';
+      try { document.documentElement.dataset.theme = localStorage.getItem('ars-memoria-theme') === 'light' ? 'light' : 'dark'; } catch {}
     </script>
   </head>
   <body>
-    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a tema claro">
-      <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42" />
-      </svg>
-      <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M20.5 15.2A8.5 8.5 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z" />
-      </svg>
-    </button>
+    <a class="skip-link" href="#inicio">Ir al contenido</a>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a tema claro"><Sun class="theme-icon--sun" aria-hidden="true" /><Moon class="theme-icon--moon" aria-hidden="true" /></button>
+    <div class="ambient-field" aria-hidden="true"><canvas class="silk-canvas" data-silk-canvas></canvas></div>
+    <div class="floating-actions" role="group" aria-label="Acciones rápidas">
+      <button class="floating-action floating-action--top" type="button" aria-label="Subir al inicio" title="Subir al inicio"><ArrowUp aria-hidden="true" /></button>
+      <a class="floating-action" href="https://wa.me/523322621939" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp" title="WhatsApp"><WhatsApp /></a>
+    </div>
     <slot />
-    <script is:inline>
-      const themeToggle = document.querySelector('.theme-toggle');
+    <script>
+      const themeToggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
       const updateThemeToggle = () => {
         const isLight = document.documentElement.dataset.theme === 'light';
         themeToggle?.setAttribute('aria-pressed', String(isLight));
@@ -35,8 +38,11 @@ const { title = 'Ars Memoriae' } = Astro.props;
       themeToggle?.addEventListener('click', () => {
         const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
         document.documentElement.dataset.theme = nextTheme;
-        localStorage.setItem('ars-memoria-theme', nextTheme);
+        try { localStorage.setItem('ars-memoria-theme', nextTheme); } catch {}
         updateThemeToggle();
+      });
+      document.querySelector('.floating-action--top')?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
       });
     </script>
   </body>

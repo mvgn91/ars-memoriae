@@ -30,3 +30,11 @@ STATE: ACTIVE
 
 ### Fixed
 - Build estático verificado con `npm run build`.
+
+## v3 — 2026-11-12
+
+- Reconstrucción autorizada por TAREA-V3.md y §30: hero, cinco momentos, índice fijo, FAQ contextual y disclaimer profesional.
+- Copy final literal, foto y ficha de Armando Ibáñez, CTA de WhatsApp y tres destinos de contacto.
+- Retirados modalidades cerradas, archivo predeterminado, promesas de expansión y pie provisional de v2.
+- Iconos desde lucide-astro y componente propio de WhatsApp; scroll nativo, temas persistentes, Silk sin WebGL en móvil y efectos con pausa por visibilidad.
+- Verificado: build OK, Astro check sin errores ni advertencias, auditoría de HTML con scripts/verificar-v3.mjs OK. Verificación visual a cargo de Nyx por instrucción del usuario; detalles en REPORTE-RONDA-V3.md. Sin deploy.

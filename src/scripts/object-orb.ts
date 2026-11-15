@@ -1,6 +1,8 @@
 const canvas = document.querySelector<HTMLCanvasElement>('[data-orb-canvas]');
 const wrap = document.querySelector<HTMLElement>('[data-orb-wrap]');
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reducedMotion = motion.matches;
+let visible = true;
 
 if (canvas && wrap) {
   const context = canvas.getContext('2d');
@@ -10,6 +12,10 @@ if (canvas && wrap) {
     let height = 0;
     let pixelRatio = 1;
 
+    const getPalette = () => document.documentElement.dataset.theme === 'light'
+      ? { light: 'rgba(255,255,255,.95)', amber: 'rgba(122,77,0,.94)', mid: 'rgba(232,168,56,.98)', dark: 'rgba(62,31,60,.55)' }
+      : { light: 'rgba(255,239,190,.95)', amber: 'rgba(232,168,56,.94)', mid: 'rgba(126,57,86,.98)', dark: 'rgba(25,10,30,1)' };
+
     const resize = () => {
       const bounds = wrap.getBoundingClientRect();
       pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -18,7 +24,7 @@ if (canvas && wrap) {
       canvas.width = width * pixelRatio;
       canvas.height = height * pixelRatio;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      draw(0);
+      render();
     };
 
     const draw = (time: number) => {
@@ -27,6 +33,7 @@ if (canvas && wrap) {
       const cy = height / 2;
       const radius = size * .38;
       const phase = reducedMotion ? .25 : time * .00035;
+      const palette = getPalette();
 
       context.clearRect(0, 0, width, height);
       context.save();
@@ -42,10 +49,10 @@ if (canvas && wrap) {
       context.fill();
 
       const orb = context.createRadialGradient(-radius * .32, -radius * .42, radius * .05, 0, 0, radius * 1.08);
-      orb.addColorStop(0, 'rgba(255,239,190,.95)');
-      orb.addColorStop(.22, 'rgba(232,168,56,.94)');
-      orb.addColorStop(.64, 'rgba(126,57,86,.98)');
-      orb.addColorStop(1, 'rgba(25,10,30,1)');
+      orb.addColorStop(0, palette.light);
+      orb.addColorStop(.22, palette.amber);
+      orb.addColorStop(.64, palette.mid);
+      orb.addColorStop(1, palette.dark);
       context.fillStyle = orb;
       context.beginPath();
       context.arc(0, 0, radius, 0, Math.PI * 2);
@@ -59,7 +66,7 @@ if (canvas && wrap) {
       for (let layer = 0; layer < 5; layer += 1) {
         context.beginPath();
         context.lineWidth = 1 + layer * .45;
-        context.strokeStyle = `rgba(255,239,190,${.14 - layer * .016})`;
+        context.strokeStyle = `rgba(255,255,255,${.14 - layer * .016})`;
         for (let step = -radius; step <= radius; step += 3) {
           const normalized = step / radius;
           const curve = Math.sin(normalized * 8 + phase * (1.4 + layer * .2) + layer) * radius * .055;
@@ -79,13 +86,30 @@ if (canvas && wrap) {
       context.restore();
 
       context.restore();
-      if (!reducedMotion) frame = requestAnimationFrame(draw);
+
     };
 
+    let last = 0;
+    const tick = (time: number) => {
+      frame = 0;
+      if (reducedMotion || !visible || document.hidden) return;
+      if (time - last >= 1000 / 30) { draw(time); last = time; }
+      frame = requestAnimationFrame(tick);
+    };
+    const render = () => {
+      cancelAnimationFrame(frame);
+      draw(performance.now());
+      if (!reducedMotion && visible && !document.hidden) frame = requestAnimationFrame(tick);
+    };
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; render(); }).observe(wrap);
+    motion.addEventListener('change', () => { reducedMotion = motion.matches; render(); });
+    document.addEventListener('visibilitychange', render);
     const observer = new ResizeObserver(resize);
     observer.observe(wrap);
     resize();
-    if (!reducedMotion) frame = requestAnimationFrame(draw);
+    new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     window.addEventListener('pagehide', () => cancelAnimationFrame(frame), { once: true });
   }
 }
+
+export {};
